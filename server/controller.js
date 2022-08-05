@@ -49,6 +49,14 @@ module.exports = {
         res.status(200).send(affirmationsDB)
     },
 
+	deleteAffirmation: (req, res) => {
+		let { id } = req.params
+		let index = affirmationsDB.findIndex(affirmationObj => affirmationObj.id === +id)
+
+		affirmationsDB.splice(index, 1)
+		res.status(200).send(affirmationsDB)
+	},
+
     getQuote: (req, res) => {
 		const quotes = [`There is always light. If only we're brave enough to see it. If only we're brave enough to be it. - Amanda Gorman`, `I have learned not to allow rejection to move me. - Cicely Tyson`, `You’re braver than you believe, stronger than you seem, and smarter than you think. - A. A. Milne`]
 

@@ -4,6 +4,9 @@ const affirmationsForm = document.querySelector('.affirmations-form')
 const affirmationsList = document.querySelector('.affirmations-list')
 const affirmationInput = document.querySelector('.affirmation-input')
 const quotesButton = document.querySelector('.quotes-button')
+const deleteForm = document.querySelector('.delete-form')
+const deleteInput = document.querySelector('.number-to-delete')
+
 
 const getCompliment = () => {
     axios.get("http://localhost:4000/api/compliment/")
@@ -55,8 +58,22 @@ const displayAffirmations = arr => {
     }
 }
 
+const deleteAffirmation = (e) => {
+    e.preventDefault()
+    let numberToDelete = deleteInput.value
+    console.log(numberToDelete)
+
+    axios.delete(`http://localhost:4000/api/affirmation/${numberToDelete}`)
+        .then(response => displayAffirmations(response.data))
+        .catch(err => console.log(err))
+        
+    deleteInput.value = ''
+}
+
 complimentBtn.addEventListener('click', getCompliment)
 fortuneButton.addEventListener('click', getFortune)
 affirmationsForm.addEventListener('submit', postAffirmation)
 quotesButton.addEventListener('click', getQuote)
+deleteForm.addEventListener('submit', deleteAffirmation)
+
 
