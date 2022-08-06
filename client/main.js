@@ -4,8 +4,9 @@ const affirmationsForm = document.querySelector('.affirmations-form')
 const affirmationsList = document.querySelector('.affirmations-list')
 const affirmationInput = document.querySelector('.affirmation-input')
 const quotesButton = document.querySelector('.quotes-button')
-const deleteForm = document.querySelector('.delete-form')
-const deleteInput = document.querySelector('.number-to-delete')
+const updateInput = document.querySelector('.number-to-update')
+const newUpdate = document.querySelector('.new-update')
+const updateForm = document.querySelector('.update-form')
 
 
 const getCompliment = () => {
@@ -44,13 +45,6 @@ const postAffirmation = (e) => {
     affirmationInput.value = ''
 }
 
-const createAffirmation = affirmationObj => {
-    let newAffirmation = affirmationObj.affirmation
-    let newAffirmationLi = document.createElement('li')
-    newAffirmationLi.textContent = newAffirmation
-    affirmationsList.append(newAffirmationLi)
-}
-
 const displayAffirmations = arr => {
     affirmationsList.innerHTML = ``
     for(let i = 0; i < arr.length; i++) {
@@ -58,22 +52,38 @@ const displayAffirmations = arr => {
     }
 }
 
-const deleteAffirmation = (e) => {
-    e.preventDefault()
-    let numberToDelete = deleteInput.value
-    console.log(numberToDelete)
+const createAffirmation = affirmationObj => {
+    let newAffirmation = affirmationObj.affirmation
+    let newAffirmationLi = document.createElement('li')
+    newAffirmationLi.classList.add('affirmation')
+    newAffirmationLi.innerHTML = `<p>${newAffirmation}</p><button class="delete" onClick="deleteAffirmation(${affirmationObj.id})">Delete</button>`
+    affirmationsList.append(newAffirmationLi)
+}
 
-    axios.delete(`http://localhost:4000/api/affirmation/${numberToDelete}`)
+const deleteAffirmation = id => {
+    axios.delete(`http://localhost:4000/api/affirmation/${id}`)
+        .then(response => displayAffirmations(response.data))
+        .catch(err => console.log(err))
+}
+
+const updateAffirmation = (e) => {
+    e.preventDefault()
+    let id = e.target[0].value
+    let input = e.target[1].value
+
+    axios.put(`http://localhost:4000/api/affirmation/${id}`, { input })
         .then(response => displayAffirmations(response.data))
         .catch(err => console.log(err))
         
-    deleteInput.value = ''
+    newUpdate.value = ''
+    updateInput.value = ''
 }
 
 complimentBtn.addEventListener('click', getCompliment)
 fortuneButton.addEventListener('click', getFortune)
 affirmationsForm.addEventListener('submit', postAffirmation)
 quotesButton.addEventListener('click', getQuote)
-deleteForm.addEventListener('submit', deleteAffirmation)
+updateForm.addEventListener('submit', updateAffirmation)
+
 
 

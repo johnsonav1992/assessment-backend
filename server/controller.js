@@ -28,14 +28,21 @@ module.exports = {
 		]
 
 		let randomIndex = Math.floor(Math.random() * fortunes.length)
-        console.log(randomIndex)
 		let randomFortune = fortunes[randomIndex]
 
 		res.status(200).send(randomFortune)
 	},
 
-    postAffirmation: (req, res) => {
+	getQuote: (req, res) => {
+		const quotes = [`There is always light. If only we're brave enough to see it. If only we're brave enough to be it. - Amanda Gorman`, `I have learned not to allow rejection to move me. - Cicely Tyson`, `You’re braver than you believe, stronger than you seem, and smarter than you think. - A. A. Milne`]
 
+		let randomIndex = Math.floor(Math.random() * quotes.length)
+		let randomQuote = quotes[randomIndex]
+
+		res.status(200).send(randomQuote)
+	},
+
+    postAffirmation: (req, res) => {
         let { affirmation } = req.body
 
         const postedAffirmation = {
@@ -45,25 +52,34 @@ module.exports = {
 
         affirmationsDB.push(postedAffirmation)
         baseId++
+		console.log(baseId)
         console.log(affirmationsDB)
         res.status(200).send(affirmationsDB)
     },
 
 	deleteAffirmation: (req, res) => {
 		let { id } = req.params
+
 		let index = affirmationsDB.findIndex(affirmationObj => affirmationObj.id === +id)
 
 		affirmationsDB.splice(index, 1)
+		if (affirmationsDB.length === 0) {
+			baseId = 1
+		} 
+		console.log(affirmationsDB)
 		res.status(200).send(affirmationsDB)
 	},
 
-    getQuote: (req, res) => {
-		const quotes = [`There is always light. If only we're brave enough to see it. If only we're brave enough to be it. - Amanda Gorman`, `I have learned not to allow rejection to move me. - Cicely Tyson`, `You’re braver than you believe, stronger than you seem, and smarter than you think. - A. A. Milne`]
+	updateAffirmation: (req, res) => {
+		console.log(req.body)
+		let { id } = req.params
+		let { input } = req.body
 
-		let randomIndex = Math.floor(Math.random() * quotes.length)
-        console.log(randomIndex)
-		let randomQuote = quotes[randomIndex]
+		let index = affirmationsDB.findIndex(affirmationObj => affirmationObj.id === +id)
 
-		res.status(200).send(randomQuote)
-	},
+		affirmationsDB[index].affirmation = input
+		console.log(affirmationsDB)
+		res.status(200).send(affirmationsDB)
+	}
+
 }

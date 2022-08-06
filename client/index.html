@@ -1,30 +1,49 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Back End Assessment</title>
-  </head>
-  <body class="container">
-    <button id="complimentButton">Get a compliment</button>
-    <button class="fortune-button">Get a fortune</button>
-    <button class="quotes-button">Get a Quote</button>
+	<head>
+		<link rel="stylesheet" href="styles.css" />
+		<title>Back-End Assessment</title>
+	</head>
+	<body class="container">
+		<header>
+			<h1>Points of Positivity</h1>
+			<p>A site of Feel-Goods</p>
+      <img src="./positive-smiley-face.png" alt="">
+		</header>
+    <h4>Click these buttons for a quick boost!</h4>
+		<div class="button-container">
+			<button id="complimentButton" class="btn">Get a compliment</button>
+			<button class="fortune-button btn">Get a fortune</button>
+			<button class="quotes-button btn">Get a Quote</button>
+		</div>
 
+		<h2 class="title">Affirmations Board</h2>
+		<p class="subtitle">Post affirmations here to brighten others' days!</p>
+		<div class="form-wrapper">
+			<form class="affirmations-form">
+				<input type="text" class="affirmation-input" placeholder="Affirmation here"/>
+				<button class="submit-btn btn">Post</button>
+			</form>
+			<form class="update-form">
+				<input
+					type="text"
+					class="number-to-update"
+					placeholder="id to update"
+				/>
+				<input
+					type="text"
+					class="new-update"
+					placeholder="Text to update"
+				/>
+				<button class="update-btn btn">Update</button>
+			</form>
+		</div>
 
-    <form class="affirmations-form">
-      <h1 class="title">Affirmations Board</h1>
-      <p class="subtitle">Post affirmations here to brighten others' days!</p>
-      <input type="text" class="affirmation-input">
-      <button class="submit-btn">Post</button>
-    </form>
-    <form class="delete-form">
-      <input type="text" class="number-to-delete" placeholder="id to delete">
-      <button class="delete-button">Delete</button>
-    </form>
-  
-    
-    <ul class="affirmations-list"></ul>
+    <div class="list-wrapper">
+      <ul class="affirmations-list"></ul>
+    </div>
 
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script src="main.js"></script>
-    
-  </body>
+		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+		<script src="main.js"></script>
+	</body>
 </html>
